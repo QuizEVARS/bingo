@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo de Pré-Rentrée</title>
+    <title>Bingo Pré-Rentrée</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -145,6 +145,38 @@
         .victoire-anim {
             animation: blink 0.8s infinite;
         }
+
+        /* Pour les téléphones */
+        @media (max-width: 500px) {
+            .main-container {
+                max-width: 95%;
+                padding: 15px;
+            }
+            
+            .bingo-case {
+                height: 90px;
+                font-size: 10px;
+                padding: 8px;
+                line-height: 1.3;
+            }
+            
+            .titre {
+                font-size: 24px;
+            }
+            
+            .bingo-grid {
+                gap: 6px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .bingo-case {
+                height: 95px;
+                font-size: 11px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -152,7 +184,7 @@
         <h1 class="titre">BINGO Pré-Rentrée</h1>
         
         <div class="message-victoire" id="msg-victoire">
-            <h2> BINGO ! </h2>
+            <h2>🎉 BINGO ! 🎉</h2>
             <p>Une pré-rentrée réussie 😎</p>
         </div>
 
