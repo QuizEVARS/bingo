@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const BingoGame = () => {
-  // Contenu des cases du bingo
-  const bingoContent = [
+function BingoGame() {
+  // Cases du bingo
+  const cases = [
     "Laurent sort de chez le coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
     "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
     "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
@@ -10,7 +10,7 @@ const BingoGame = () => {
     "La direction propose aux profs docs de parler, et Angèle refuse",
     "Cris intempestifs : « Et les emplois du temps ? »",
     "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
-    "Le groupe « J'ai bossé comme une malade… » s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
+    "Le groupe « J'ai bossé comme une malade... » s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
     "KCD fait la tronche lors des prises de parole syndicales",
     "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
     "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
@@ -30,107 +30,189 @@ const BingoGame = () => {
     "Florence C. prend frénétiquement des notes"
   ];
 
-  // Initialiser la grille avec le contenu personnalisé
-  const initialGrid = bingoContent.map((content, index) => ({
-    id: index,
-    content: content,
-    marked: false
-  }));
-
-  const [grid, setGrid] = useState(initialGrid);
-  const [winner, setWinner] = useState(false);
-
-  // Fonction pour marquer/démarquer une case
-  const toggleCell = (id) => {
-    setGrid(prev => 
-      prev.map(cell => 
-        cell.id === id ? { ...cell, marked: !cell.marked } : cell
-      )
-    );
+  // Mélanger les cases
+  const melangerCases = () => {
+    const casesCopiees = [...cases];
+    // Algorithme de mélange simple
+    for (let i = casesCopiees.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = casesCopiees[i];
+      casesCopiees[i] = casesCopiees[j];
+      casesCopiees[j] = temp;
+    }
+    return casesCopiees;
   };
 
-  // Vérifier s'il y a une ligne gagnante
-  const checkWinner = (gridState) => {
-    const markedPositions = gridState
-      .filter(cell => cell.marked)
-      .map(cell => cell.id);
+  // Créer les cases avec leur état
+  const creerGrille = () => {
+    const casesMelangees = melangerCases();
+    return casesMelangees.map((texte, i) => ({
+      id: i,
+      texte: texte,
+      coche: false
+    }));
+  };
 
-    // Lignes horizontales
-    for (let row = 0; row < 5; row++) {
-      const rowStart = row * 5;
-      const rowPositions = [rowStart, rowStart + 1, rowStart + 2, rowStart + 3, rowStart + 4];
-      if (rowPositions.every(pos => markedPositions.includes(pos))) {
-        return true;
+  const [grille, setGrille] = useState(creerGrille());
+  const [gagne, setGagne] = useState(false);
+
+  // Cliquer sur une case
+  const cocherCase = (id) => {
+    const nouvelleGrille = grille.map(case_ => {
+      if (case_.id === id) {
+        return { ...case_, coche: !case_.coche };
+      }
+      return case_;
+    });
+    setGrille(nouvelleGrille);
+  };
+
+  // Vérifier si on a gagné
+  const verifierVictoire = (g) => {
+    const cochees = [];
+    for (let i = 0; i < g.length; i++) {
+      if (g[i].coche) {
+        cochees.push(i);
       }
     }
 
-    // Lignes verticales
-    for (let col = 0; col < 5; col++) {
-      const colPositions = [col, col + 5, col + 10, col + 15, col + 20];
-      if (colPositions.every(pos => markedPositions.includes(pos))) {
-        return true;
+    // Lignes
+    for (let ligne = 0; ligne < 5; ligne++) {
+      let compteur = 0;
+      for (let col = 0; col < 5; col++) {
+        if (cochees.includes(ligne * 5 + col)) {
+          compteur++;
+        }
       }
+      if (compteur === 5) return true;
+    }
+
+    // Colonnes
+    for (let col = 0; col < 5; col++) {
+      let compteur = 0;
+      for (let ligne = 0; ligne < 5; ligne++) {
+        if (cochees.includes(ligne * 5 + col)) {
+          compteur++;
+        }
+      }
+      if (compteur === 5) return true;
     }
 
     // Diagonales
-    const diagonal1 = [0, 6, 12, 18, 24];
-    const diagonal2 = [4, 8, 12, 16, 20];
-    
-    if (diagonal1.every(pos => markedPositions.includes(pos)) ||
-        diagonal2.every(pos => markedPositions.includes(pos))) {
-      return true;
+    let diag1 = 0, diag2 = 0;
+    for (let i = 0; i < 5; i++) {
+      if (cochees.includes(i * 5 + i)) diag1++;
+      if (cochees.includes(i * 5 + (4 - i))) diag2++;
     }
+    if (diag1 === 5 || diag2 === 5) return true;
 
     return false;
   };
 
-  // Vérifier le gagnant à chaque changement de grille
   useEffect(() => {
-    setWinner(checkWinner(grid));
-  }, [grid]);
+    setGagne(verifierVictoire(grille));
+  }, [grille]);
 
-  // Réinitialiser le jeu
-  const resetGame = () => {
-    setGrid(initialGrid);
-    setWinner(false);
+  const recommencer = () => {
+    setGrille(creerGrille());
+    setGagne(false);
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-2">
-      <div className="bg-white rounded-2xl shadow-2xl p-3 max-w-sm w-full">
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f0f8ff 0%, #e6e6fa 100%)',
+      padding: '10px'
+    }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '15px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+        padding: '15px',
+        maxWidth: '400px',
+        width: '100%'
+      }}>
+        <h1 style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginBottom: '15px',
+          color: '#333'
+        }}>
           BINGO de Pré-Rentrée
         </h1>
-        
-        {winner && (
-          <div className="text-center mb-4 p-3 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-lg animate-pulse">
-            <h2 className="text-xl font-bold text-gray-800 mb-1">
+
+        {gagne && (
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '15px',
+            padding: '12px',
+            background: 'linear-gradient(90deg, #ffd700 0%, #ffa500 100%)',
+            borderRadius: '10px',
+            animation: 'pulse 1s infinite'
+          }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', margin: '0 0 5px 0' }}>
               🎉 BINGO ! 🎉
             </h2>
-            <p className="text-sm text-gray-700">Félicitations !</p>
+            <p style={{ fontSize: '14px', color: '#555', margin: 0 }}>Félicitations !</p>
           </div>
         )}
 
-        <div className="grid grid-cols-5 gap-1 mb-4">
-          {grid.map((cell, index) => (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '3px',
+          marginBottom: '15px'
+        }}>
+          {grille.map((case_, index) => (
             <button
-              key={cell.id}
-              onClick={() => toggleCell(cell.id)}
-              className={`
-                aspect-square rounded-lg border border-gray-300 
-                text-[8px] leading-tight font-normal transition-all duration-200
-                hover:scale-105 active:scale-95 touch-manipulation
-                ${cell.marked 
-                  ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-green-500 shadow-md' 
-                  : 'bg-white hover:bg-gray-50 text-gray-700'
+              key={case_.id}
+              onClick={() => cocherCase(case_.id)}
+              style={{
+                aspectRatio: '1',
+                borderRadius: '8px',
+                border: case_.coche ? '2px solid #22c55e' : '1px solid #ccc',
+                fontSize: '9px',
+                lineHeight: '1.2',
+                fontWeight: 'normal',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+                backgroundColor: case_.coche ? '#22c55e' : '#fff',
+                color: case_.coche ? 'white' : '#333',
+                padding: '2px'
+              }}
+              onMouseOver={(e) => {
+                if (!case_.coche) {
+                  e.target.style.backgroundColor = '#f5f5f5';
+                  e.target.style.transform = 'scale(1.02)';
                 }
-              `}
+              }}
+              onMouseOut={(e) => {
+                if (!case_.coche) {
+                  e.target.style.backgroundColor = '#fff';
+                  e.target.style.transform = 'scale(1)';
+                }
+              }}
             >
-              <div className="flex items-center justify-center h-full p-0.5 overflow-hidden">
-                {cell.marked && <span className="text-lg">✓</span>}
-                {!cell.marked && (
-                  <div className="text-center leading-[1.1] hyphens-auto break-words">
-                    {cell.content}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                overflow: 'hidden'
+              }}>
+                {case_.coche ? (
+                  <span style={{ fontSize: '16px' }}>✓</span>
+                ) : (
+                  <div style={{
+                    textAlign: 'center',
+                    wordBreak: 'break-word',
+                    hyphens: 'auto'
+                  }}>
+                    {case_.texte}
                   </div>
                 )}
               </div>
@@ -138,19 +220,43 @@ const BingoGame = () => {
           ))}
         </div>
 
-        <div className="text-center">
+        <div style={{ textAlign: 'center' }}>
           <button
-            onClick={resetGame}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 
-                       text-white font-bold py-2 px-6 rounded-full transition-all duration-200 
-                       hover:scale-105 shadow-lg text-sm touch-manipulation"
+            onClick={recommencer}
+            style={{
+              background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
+              color: 'white',
+              fontWeight: 'bold',
+              padding: '10px 20px',
+              borderRadius: '25px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.background = 'linear-gradient(90deg, #2563eb 0%, #7c3aed 100%)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform = 'scale(1)';
+              e.target.style.background = 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)';
+            }}
           >
             🔄 Nouvelle partie
           </button>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.8; }
+        }
+      `}</style>
     </div>
   );
-};
+}
 
 export default BingoGame;
