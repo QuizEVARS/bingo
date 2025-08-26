@@ -6,7 +6,7 @@
     <title>Bingo Pré-Rentrée</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: #87ceeb;
@@ -31,6 +31,7 @@
             margin-bottom: 25px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
         }
 
         .message-victoire {
@@ -49,6 +50,7 @@
             font-size: 24px;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
         }
 
         .message-victoire p {
@@ -57,6 +59,7 @@
             color: #fff;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
         }
 
         .bingo-grid {
@@ -70,7 +73,7 @@
         }
 
         .bingo-case {
-            height: 75px;
+            height: 80px;
             border: 2px solid #9370db;
             background: #f8f8ff;
             background: linear-gradient(to bottom, #ffffff, #f0f8ff);
@@ -79,14 +82,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px;
-            font-size: 8px;
-            line-height: 1.1;
+            padding: 6px;
+            font-size: 9px;
+            line-height: 1.2;
             text-align: center;
             transition: all 0.3s;
             word-wrap: break-word;
             overflow: hidden;
             color: #333;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-weight: 500;
         }
 
         .bingo-case:hover {
@@ -122,6 +127,7 @@
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             border: 2px solid #ff4500;
+            font-family: Arial, sans-serif;
         }
 
         .reset-btn:hover {
@@ -160,14 +166,14 @@
     <script>
         // Toutes les phrases du bingo
         var phrases = [
-            "Laurent sort de chez le coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
+            "Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
             "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
             "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
             "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
             "La direction propose aux profs docs de parler, et Angèle refuse",
             "Cris intempestifs : « Et les emplois du temps ? »",
             "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
-            "Le groupe « J'ai bossé comme une malade... » s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
+            "Notr groupe WhatsApp s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
             "KCD fait la tronche lors des prises de parole syndicales",
             "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
             "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
