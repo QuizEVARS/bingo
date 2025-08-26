@@ -1,262 +1,332 @@
-import React, { useState, useEffect } from 'react';
-
-function BingoGame() {
-  // Cases du bingo
-  const cases = [
-    "Laurent sort de chez le coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
-    "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
-    "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
-    "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
-    "La direction propose aux profs docs de parler, et Angèle refuse",
-    "Cris intempestifs : « Et les emplois du temps ? »",
-    "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
-    "Le groupe « J'ai bossé comme une malade... » s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
-    "KCD fait la tronche lors des prises de parole syndicales",
-    "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
-    "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
-    "La photocopieuse est déjà en panne",
-    "Discours inutile de KCD sur le sens humain de notre métier",
-    "Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
-    "Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
-    "Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
-    "« Il faut faire attention aux travers de la bienveillance »",
-    "Sabrina encourage les collègues à cotiser à l'amicale",
-    "Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
-    "Quelqu'un arrive en retard et se fait afficher par les cheffes",
-    "Aucun changement dans l'orga « visite aux PP » de l'après-midi",
-    "Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
-    "Bruits des collègues d'EPS au fond",
-    "KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
-    "Florence C. prend frénétiquement des notes"
-  ];
-
-  // Mélanger les cases
-  const melangerCases = () => {
-    const casesCopiees = [...cases];
-    // Algorithme de mélange simple
-    for (let i = casesCopiees.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = casesCopiees[i];
-      casesCopiees[i] = casesCopiees[j];
-      casesCopiees[j] = temp;
-    }
-    return casesCopiees;
-  };
-
-  // Créer les cases avec leur état
-  const creerGrille = () => {
-    const casesMelangees = melangerCases();
-    return casesMelangees.map((texte, i) => ({
-      id: i,
-      texte: texte,
-      coche: false
-    }));
-  };
-
-  const [grille, setGrille] = useState(creerGrille());
-  const [gagne, setGagne] = useState(false);
-
-  // Cliquer sur une case
-  const cocherCase = (id) => {
-    const nouvelleGrille = grille.map(case_ => {
-      if (case_.id === id) {
-        return { ...case_, coche: !case_.coche };
-      }
-      return case_;
-    });
-    setGrille(nouvelleGrille);
-  };
-
-  // Vérifier si on a gagné
-  const verifierVictoire = (g) => {
-    const cochees = [];
-    for (let i = 0; i < g.length; i++) {
-      if (g[i].coche) {
-        cochees.push(i);
-      }
-    }
-
-    // Lignes
-    for (let ligne = 0; ligne < 5; ligne++) {
-      let compteur = 0;
-      for (let col = 0; col < 5; col++) {
-        if (cochees.includes(ligne * 5 + col)) {
-          compteur++;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Pré-Rentrée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            background: linear-gradient(to bottom right, #e3f2fd, #f3e5f5);
         }
-      }
-      if (compteur === 5) return true;
-    }
 
-    // Colonnes
-    for (let col = 0; col < 5; col++) {
-      let compteur = 0;
-      for (let ligne = 0; ligne < 5; ligne++) {
-        if (cochees.includes(ligne * 5 + col)) {
-          compteur++;
+        .main-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            padding: 20px;
         }
-      }
-      if (compteur === 5) return true;
-    }
 
-    // Diagonales
-    let diag1 = 0, diag2 = 0;
-    for (let i = 0; i < 5; i++) {
-      if (cochees.includes(i * 5 + i)) diag1++;
-      if (cochees.includes(i * 5 + (4 - i))) diag2++;
-    }
-    if (diag1 === 5 || diag2 === 5) return true;
+        .titre {
+            text-align: center;
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
 
-    return false;
-  };
+        .message-victoire {
+            text-align: center;
+            padding: 15px;
+            background: #ffeb3b;
+            background: linear-gradient(45deg, #ffeb3b, #ff9800);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
 
-  useEffect(() => {
-    setGagne(verifierVictoire(grille));
-  }, [grille]);
+        .message-victoire h2 {
+            margin: 0 0 8px 0;
+            font-size: 22px;
+            color: #333;
+        }
 
-  const recommencer = () => {
-    setGrille(creerGrille());
-    setGagne(false);
-  };
+        .message-victoire p {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
 
-  return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f0f8ff 0%, #e6e6fa 100%)',
-      padding: '10px'
-    }}>
-      <div style={{
-        backgroundColor: 'white',
-        borderRadius: '15px',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-        padding: '15px',
-        maxWidth: '400px',
-        width: '100%'
-      }}>
-        <h1 style={{
-          fontSize: '24px',
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginBottom: '15px',
-          color: '#333'
-        }}>
-          BINGO de Pré-Rentrée
-        </h1>
+        .bingo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 25px;
+        }
 
-        {gagne && (
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '15px',
-            padding: '12px',
-            background: 'linear-gradient(90deg, #ffd700 0%, #ffa500 100%)',
-            borderRadius: '10px',
-            animation: 'pulse 1s infinite'
-          }}>
-            <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', margin: '0 0 5px 0' }}>
-              🎉 BINGO ! 🎉
-            </h2>
-            <p style={{ fontSize: '14px', color: '#555', margin: 0 }}>Félicitations !</p>
-          </div>
-        )}
+        .bingo-case {
+            height: 70px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            font-size: 8px;
+            line-height: 1.1;
+            text-align: center;
+            transition: background-color 0.2s;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '3px',
-          marginBottom: '15px'
-        }}>
-          {grille.map((case_, index) => (
-            <button
-              key={case_.id}
-              onClick={() => cocherCase(case_.id)}
-              style={{
-                aspectRatio: '1',
-                borderRadius: '8px',
-                border: case_.coche ? '2px solid #22c55e' : '1px solid #ccc',
-                fontSize: '9px',
-                lineHeight: '1.2',
-                fontWeight: 'normal',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-                backgroundColor: case_.coche ? '#22c55e' : '#fff',
-                color: case_.coche ? 'white' : '#333',
-                padding: '2px'
-              }}
-              onMouseOver={(e) => {
-                if (!case_.coche) {
-                  e.target.style.backgroundColor = '#f5f5f5';
-                  e.target.style.transform = 'scale(1.02)';
-                }
-              }}
-              onMouseOut={(e) => {
-                if (!case_.coche) {
-                  e.target.style.backgroundColor = '#fff';
-                  e.target.style.transform = 'scale(1)';
-                }
-              }}
-            >
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                overflow: 'hidden'
-              }}>
-                {case_.coche ? (
-                  <span style={{ fontSize: '16px' }}>✓</span>
-                ) : (
-                  <div style={{
-                    textAlign: 'center',
-                    wordBreak: 'break-word',
-                    hyphens: 'auto'
-                  }}>
-                    {case_.texte}
-                  </div>
-                )}
-              </div>
-            </button>
-          ))}
+        .bingo-case:hover {
+            background: #f8f8f8;
+        }
+
+        .bingo-case.checked {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .bingo-case.checked:hover {
+            background: #4caf50;
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 12px 25px;
+            background: #2196f3;
+            background: linear-gradient(135deg, #2196f3, #9c27b0);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .victoire-anim {
+            animation: blink 0.8s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="titre">BINGO Pré-Rentrée</h1>
+        
+        <div class="message-victoire" id="msg-victoire">
+            <h2>🎉 BINGO ! 🎉</h2>
+            <p>Une pré-rentrée réussie 😎</p>
         </div>
 
-        <div style={{ textAlign: 'center' }}>
-          <button
-            onClick={recommencer}
-            style={{
-              background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
-              color: 'white',
-              fontWeight: 'bold',
-              padding: '10px 20px',
-              borderRadius: '25px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '14px',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.background = 'linear-gradient(90deg, #2563eb 0%, #7c3aed 100%)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.background = 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)';
-            }}
-          >
-            🔄 Nouvelle partie
-          </button>
+        <div class="bingo-grid" id="grid">
+            <!-- cases générées en JS -->
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-      `}</style>
+        <button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
     </div>
-  );
-}
 
-export default BingoGame;
+    <script>
+        // Toutes les phrases du bingo
+        var phrases = [
+            "Laurent sort de chez le coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
+            "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
+            "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
+            "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
+            "La direction propose aux profs docs de parler, et Angèle refuse",
+            "Cris intempestifs : « Et les emplois du temps ? »",
+            "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
+            "Le groupe « J'ai bossé comme une malade... » s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
+            "KCD fait la tronche lors des prises de parole syndicales",
+            "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
+            "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
+            "La photocopieuse est déjà en panne",
+            "Discours inutile de KCD sur le sens humain de notre métier",
+            "Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
+            "Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
+            "Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
+            "« Il faut faire attention aux travers de la bienveillance »",
+            "Sabrina encourage les collègues à cotiser à l'amicale",
+            "Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
+            "Quelqu'un arrive en retard et se fait afficher par les cheffes",
+            "Aucun changement dans l'orga « visite aux PP » de l'après-midi",
+            "Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
+            "Bruits des collègues d'EPS au fond",
+            "KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
+            "Florence C. prend frénétiquement des notes"
+        ];
+
+        var grilleData = [];
+        var estGagne = false;
+
+        // fonction pour mélanger un tableau
+        function melangerTableau(arr) {
+            var nouveauTableau = [];
+            for (var i = 0; i < arr.length; i++) {
+                nouveauTableau.push(arr[i]);
+            }
+            
+            // mélange Fisher-Yates
+            for (var i = nouveauTableau.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = nouveauTableau[i];
+                nouveauTableau[i] = nouveauTableau[j];
+                nouveauTableau[j] = temp;
+            }
+            return nouveauTableau;
+        }
+
+        // Initialiser la grille
+        function initGrille() {
+            var phrasesMelangees = melangerTableau(phrases);
+            grilleData = [];
+            
+            for (var i = 0; i < 25; i++) {
+                grilleData.push({
+                    id: i,
+                    texte: phrasesMelangees[i],
+                    coche: false
+                });
+            }
+            
+            afficherLaGrille();
+            estGagne = false;
+            document.getElementById('msg-victoire').style.display = 'none';
+        }
+
+        // Afficher la grille sur la page
+        function afficherLaGrille() {
+            var container = document.getElementById('grid');
+            container.innerHTML = '';
+            
+            for (var i = 0; i < grilleData.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'bingo-case';
+                
+                if (grilleData[i].coche) {
+                    div.className = div.className + ' checked';
+                    div.innerHTML = '<div style="font-size:18px;">✓</div>';
+                } else {
+                    div.textContent = grilleData[i].texte;
+                }
+                
+                // Ajouter l'événement de clic
+                div.setAttribute('data-id', i);
+                div.addEventListener('click', function() {
+                    var id = parseInt(this.getAttribute('data-id'));
+                    cocherCase(id);
+                });
+                
+                container.appendChild(div);
+            }
+        }
+
+        // Cocher/décocher une case
+        function cocherCase(id) {
+            if (estGagne) return; // Plus de clics si déjà gagné
+            
+            grilleData[id].coche = !grilleData[id].coche;
+            afficherLaGrille();
+            
+            // Vérifier victoire après un petit délai
+            setTimeout(function() {
+                checkVictoire();
+            }, 100);
+        }
+
+        // Vérifier s'il y a victoire
+        function checkVictoire() {
+            var casescochees = [];
+            
+            // Récupérer les cases cochées
+            for (var i = 0; i < grilleData.length; i++) {
+                if (grilleData[i].coche === true) {
+                    casescochees.push(i);
+                }
+            }
+            
+            var gagnant = false;
+            
+            // Vérifier lignes horizontales
+            for (var ligne = 0; ligne < 5; ligne++) {
+                var nbCochees = 0;
+                for (var col = 0; col < 5; col++) {
+                    var position = ligne * 5 + col;
+                    if (casescochees.indexOf(position) !== -1) {
+                        nbCochees++;
+                    }
+                }
+                if (nbCochees == 5) {
+                    gagnant = true;
+                }
+            }
+            
+            // Vérifier colonnes verticales
+            for (var col = 0; col < 5; col++) {
+                var nbCochees = 0;
+                for (var ligne = 0; ligne < 5; ligne++) {
+                    var position = ligne * 5 + col;
+                    if (casescochees.indexOf(position) >= 0) {
+                        nbCochees++;
+                    }
+                }
+                if (nbCochees === 5) {
+                    gagnant = true;
+                }
+            }
+            
+            // Diagonale principale (0,6,12,18,24)
+            var diag1 = 0;
+            var positions1 = [0, 6, 12, 18, 24];
+            for (var i = 0; i < positions1.length; i++) {
+                if (casescochees.indexOf(positions1[i]) != -1) {
+                    diag1++;
+                }
+            }
+            if (diag1 == 5) gagnant = true;
+            
+            // Diagonale inverse (4,8,12,16,20)  
+            var diag2 = 0;
+            var positions2 = [4, 8, 12, 16, 20];
+            for (var i = 0; i < positions2.length; i++) {
+                if (casescochees.indexOf(positions2[i]) >= 0) {
+                    diag2++;
+                }
+            }
+            if (diag2 === 5) gagnant = true;
+            
+            if (gagnant && !estGagne) {
+                estGagne = true;
+                var msgDiv = document.getElementById('msg-victoire');
+                msgDiv.style.display = 'block';
+                msgDiv.className = msgDiv.className + ' victoire-anim';
+            }
+        }
+
+        function nouvellePartie() {
+            estGagne = false;
+            var msgDiv = document.getElementById('msg-victoire');
+            msgDiv.style.display = 'none';
+            msgDiv.className = 'message-victoire';
+            initGrille();
+        }
+
+        // Démarrer quand la page est chargée
+        window.addEventListener('load', function() {
+            initGrille();
+        });
+    </script>
+</body>
+</html>
