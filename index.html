@@ -66,44 +66,33 @@
             grid-template-columns: repeat(5, 1fr);
             gap: 5px;
             margin-bottom: 30px;
-            padding: 10px;
+            padding: 0;
             background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
             border-radius: 12px;
-
             width: 100%;
             box-sizing: border-box;
-            overflow: hidden; /* empêche le débordement horizontal */
         }
 
-        /* === BINGO CASES UNIFORMES ET CENTRÉES === */
         .bingo-case {
-            height: 100px; /* hauteur uniforme */
+            width: 100%;
+            height: 90px; /* taille uniforme des cases */
             border: 2px solid #9370db;
             background: linear-gradient(to bottom, #ffffff, #f0f8ff);
             border-radius: 8px;
             cursor: pointer;
 
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* centre verticalement */
-            align-items: center;     /* centre horizontalement */
-
-            padding: 10px;
-            font-size: 9px;
-            line-height: 1.2;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 5px;
 
-            white-space: normal;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: none;
-            min-width: 0; /* important pour rester dans le conteneur */
-
-            transition: all 0.3s;
-            color: #333;
             font-family: 'Segoe UI', Tahoma, sans-serif;
             font-weight: 500;
-            position: relative;
+            color: #333;
+
+            overflow: hidden; /* empêche le texte de dépasser */
+            word-break: break-word;
         }
 
         .bingo-case:hover {
@@ -114,42 +103,12 @@
 
         .bingo-case.checked {
             background: linear-gradient(135deg, rgba(50, 205, 50, 0.7), rgba(34, 139, 34, 0.7));
-            color: #333;
             border-color: #228b22;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .bingo-case.checked:hover {
-            background: linear-gradient(135deg, rgba(50, 205, 50, 0.7), rgba(34, 139, 34, 0.7));
             transform: scale(1);
-        }
-
-        /* Responsive pour téléphones */
-        @media (max-width: 500px) {
-            .bingo-case {
-                height: 90px;
-                font-size: 10px;
-                padding: 8px;
-                line-height: 1.1;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .bingo-case {
-                height: 80px;
-                font-size: 9px;
-                padding: 6px;
-                line-height: 1.05;
-            }
-        }
-
-        @media (max-width: 350px) {
-            .bingo-case {
-                height: 70px;
-                font-size: 8px;
-                padding: 5px;
-                line-height: 1.0;
-            }
         }
 
         .reset-btn {
@@ -243,6 +202,7 @@
             return nouveauTableau;
         }
 
+        // Ajuste dynamiquement la police pour que le texte tienne dans la case
         function ajusterTaillePolice(texte) {
             if (texte.length > 120) return '8px';
             if (texte.length > 100) return '9px';
