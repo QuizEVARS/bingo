@@ -90,7 +90,6 @@ transition: all 0.3s;
 word-wrap: break-word;
 hyphens: auto;
 -webkit-hyphens: auto;
--ms-hyphens: auto;
 hyphenate-limit-lines: 2;
 hyphenate-limit-chars: 8 3 3;
 overflow-wrap: break-word;
@@ -242,8 +241,7 @@ var phrases = [
 var grilleData = [];
 var estGagne = false;
 
-// Ajuster la taille du texte simplement et sûrement
-function ajusterTailleTexte(element, texte) {
+function calculerTaille(texte) {
 var longueur = texte.length;
 var taille;
 
@@ -277,7 +275,7 @@ else if (longueur > 60) taille = 9.5;
 else taille = 10;
 }
 
-element.style.fontSize = taille + 'px';
+return taille;
 }
 
 // fonction pour mélanger un tableau
@@ -324,8 +322,9 @@ div.className = div.className + ' checked';
 }
 div.textContent = grilleData[i].texte;
 
-// Ajuster la taille du texte
-ajusterTailleTexte(div, grilleData[i].texte);
+// Ajuster taille texte
+var taille = calculerTaille(grilleData[i].texte);
+div.style.fontSize = taille + 'px';
 
 // Ajouter l'événement de clic
 div.setAttribute('data-id', i);
