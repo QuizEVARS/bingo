@@ -1,281 +1,279 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo de Pré-Rentrée</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bingo de Pré-Rentrée</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
+    }
 
-        .main-container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: linear-gradient(to bottom, #ffffff, #f0f8ff);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            padding: 25px;
-            border: 2px solid #4169e1;
-            box-sizing: border-box;
-        }
+    .main-container {
+      max-width: 450px;
+      margin: 0 auto;
+      background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border: 2px solid #4169e1;
+      box-sizing: border-box;
+    }
 
-        .titre {
-            text-align: center;
-            color: #4169e1;
-            font-size: 28px;
-            margin-bottom: 25px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
-        }
+    .titre {
+      text-align: center;
+      color: #4169e1;
+      font-size: 28px;
+      margin-bottom: 25px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+    }
 
-        .message-victoire {
-            text-align: center;
-            padding: 18px;
-            background: linear-gradient(45deg, #ffd700, #ff6347, #ff1493);
-            border-radius: 12px;
-            margin-bottom: 25px;
-            display: none;
-            border: 3px solid #ff4500;
-        }
+    .message-victoire {
+      text-align: center;
+      padding: 18px;
+      background: linear-gradient(45deg, #ffd700, #ff6347, #ff1493);
+      border-radius: 12px;
+      margin-bottom: 25px;
+      display: none;
+      border: 3px solid #ff4500;
+    }
 
-        .message-victoire h2 {
-            margin: 0 0 10px 0;
-            font-size: 24px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-family: Arial, sans-serif;
-        }
+    .message-victoire h2 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: Arial, sans-serif;
+    }
 
-        .message-victoire p {
-            margin: 0;
-            font-size: 18px;
-            color: #fff;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            font-family: Arial, sans-serif;
-        }
+    .message-victoire p {
+      margin: 0;
+      font-size: 18px;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      font-family: Arial, sans-serif;
+    }
 
-        .bingo-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-            margin-bottom: 30px;
-            padding: 0;
-            background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
-            border-radius: 12px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    .bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-bottom: 30px;
+      padding: 0;
+      background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
+      border-radius: 12px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-        .bingo-case {
-            width: 100%;
-            aspect-ratio: 1 / 1; /* cases carrées uniformes */
-            border: 2px solid #9370db;
-            background: linear-gradient(to bottom, #ffffff, #f0f8ff);
-            border-radius: 8px;
-            cursor: pointer;
+    .bingo-case {
+      aspect-ratio: 1 / 1; /* cases carrées */
+      border: 2px solid #9370db;
+      background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+      border-radius: 8px;
+      cursor: pointer;
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap; /* le texte se répartit sur plusieurs lignes */
-            text-align: center;
-            padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 5px;
 
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            font-weight: 500;
-            color: #333;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-weight: 500;
+      color: #333;
 
-            overflow: hidden; /* empêche le texte de dépasser */
-            word-break: break-word;
-        }
+      overflow: hidden;
+      word-break: break-word;
+    }
 
-        .bingo-case:hover {
-            background: #e6e6fa;
-            transform: scale(1.02);
-            border-color: #4169e1;
-        }
+    .bingo-case:hover {
+      background: #e6e6fa;
+      transform: scale(1.02);
+      border-color: #4169e1;
+    }
 
-        .bingo-case.checked {
-            background: linear-gradient(135deg, rgba(50, 205, 50, 0.7), rgba(34, 139, 34, 0.7));
-            border-color: #228b22;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
+    .bingo-case.checked {
+      background: linear-gradient(135deg, rgba(50, 205, 50, 0.7), rgba(34, 139, 34, 0.7));
+      border-color: #228b22;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
 
-        .bingo-case.checked:hover {
-            transform: scale(1);
-        }
+    .bingo-case.checked:hover {
+      transform: scale(1);
+    }
 
-        .reset-btn {
-            display: block;
-            margin: 0 auto;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #ff6347, #ff1493, #4169e1);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 2px solid #ff4500;
-            font-family: Arial, sans-serif;
-        }
+    .reset-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #ff6347, #ff1493, #4169e1);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 2px solid #ff4500;
+      font-family: Arial, sans-serif;
+    }
 
-        .reset-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(135deg, #ff4500, #ff1493, #4169e1);
-        }
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #ff4500, #ff1493, #4169e1);
+    }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
 
-        .victoire-anim {
-            animation: blink 0.8s infinite;
-        }
-    </style>
+    .victoire-anim {
+      animation: blink 0.8s infinite;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="main-container">
-        <h1 class="titre">BINGO de Pré-Rentrée 🦎</h1>
+  <div class="main-container">
+    <h1 class="titre">BINGO de Pré-Rentrée 🦎</h1>
 
-        <div class="message-victoire" id="msg-victoire">
-            <h2>BINGO !</h2>
-            <p>Une pré-rentrée réussie 😎</p>
-        </div>
-
-        <div class="bingo-grid" id="grid"></div>
-
-        <button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
+    <div class="message-victoire" id="msg-victoire">
+      <h2>BINGO !</h2>
+      <p>Une pré-rentrée réussie 😎</p>
     </div>
 
-    <script>
-        var phrases = [
-            "Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
-            "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
-            "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
-            "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
-            "La direction propose aux profs docs de parler, et Angèle refuse",
-            "Cris intempestifs : « Et les emplois du temps ? »",
-            "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
-            "Notre groupe WhatsApp s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
-            "KCD fait la tronche lors des prises de parole syndicales",
-            "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
-            "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
-            "La photocopieuse est déjà en panne",
-            "Discours inutile de KCD sur le sens humain de notre métier",
-            "Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
-            "Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
-            "Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
-            "« Il faut faire attention aux travers de la bienveillance »",
-            "Sabrina encourage les collègues à cotiser à l'amicale",
-            "Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
-            "Quelqu'un arrive en retard et se fait afficher par les cheffes",
-            "Aucun changement dans l'orga « visite aux PP » de l'après-midi",
-            "Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
-            "Bruits des collègues d'EPS au fond",
-            "KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
-            "Florence prend frénétiquement des notes"
-        ];
+    <div class="bingo-grid" id="grid"></div>
 
-        var grilleData = [];
-        var estGagne = false;
+    <button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
+  </div>
 
-        function melangerTableau(arr) {
-            var nouveauTableau = arr.slice();
-            for (var i = nouveauTableau.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = nouveauTableau[i];
-                nouveauTableau[i] = nouveauTableau[j];
-                nouveauTableau[j] = temp;
-            }
-            return nouveauTableau;
-        }
+  <script>
+    var phrases = [
+      "Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
+      "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
+      "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
+      "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
+      "La direction propose aux profs docs de parler, et Angèle refuse",
+      "Cris intempestifs : « Et les emplois du temps ? »",
+      "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
+      "Notre groupe WhatsApp s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
+      "KCD fait la tronche lors des prises de parole syndicales",
+      "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
+      "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
+      "La photocopieuse est déjà en panne",
+      "Discours inutile de KCD sur le sens humain de notre métier",
+      "Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
+      "Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
+      "Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
+      "« Il faut faire attention aux travers de la bienveillance »",
+      "Sabrina encourage les collègues à cotiser à l'amicale",
+      "Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
+      "Quelqu'un arrive en retard et se fait afficher par les cheffes",
+      "Aucun changement dans l'orga « visite aux PP » de l'après-midi",
+      "Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
+      "Bruits des collègues d'EPS au fond",
+      "KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
+      "Florence prend frénétiquement des notes"
+    ];
 
-        // Ajuste dynamiquement la police selon longueur du texte
-        function ajusterTaillePolice(texte) {
-            if (texte.length > 120) return '8px';
-            if (texte.length > 100) return '9px';
-            if (texte.length > 80) return '10px';
-            return '12px';
-        }
+    var grilleData = [];
+    var estGagne = false;
 
-        function initGrille() {
-            var phrasesMelangees = melangerTableau(phrases);
-            grilleData = [];
-            for (var i = 0; i < 25; i++) {
-                grilleData.push({ id: i, texte: phrasesMelangees[i], coche: false });
-            }
-            afficherLaGrille();
-            estGagne = false;
-            document.getElementById('msg-victoire').style.display = 'none';
-        }
+    function melangerTableau(arr) {
+      var nouveauTableau = arr.slice();
+      for (var i = nouveauTableau.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = nouveauTableau[i];
+        nouveauTableau[i] = nouveauTableau[j];
+        nouveauTableau[j] = temp;
+      }
+      return nouveauTableau;
+    }
 
-        function afficherLaGrille() {
-            var container = document.getElementById('grid');
-            container.innerHTML = '';
-            for (var i = 0; i < grilleData.length; i++) {
-                var div = document.createElement('div');
-                div.className = 'bingo-case';
-                div.textContent = grilleData[i].texte;
-                div.style.fontSize = ajusterTaillePolice(grilleData[i].texte);
-                if (grilleData[i].coche) div.classList.add('checked');
-                div.setAttribute('data-id', i);
-                div.addEventListener('click', function () {
-                    var id = parseInt(this.getAttribute('data-id'));
-                    cocherCase(id);
-                });
-                container.appendChild(div);
-            }
-        }
+    // Ajuste dynamiquement la police pour que le texte rentre
+    function ajusterTaillePoliceCase(div) {
+      let taille = 14; // point de départ
+      div.style.fontSize = taille + "px";
+      while ((div.scrollHeight > div.clientHeight || div.scrollWidth > div.clientWidth) && taille > 6) {
+        taille--;
+        div.style.fontSize = taille + "px";
+      }
+    }
 
-        function cocherCase(id) {
-            if (estGagne) return;
-            grilleData[id].coche = !grilleData[id].coche;
-            afficherLaGrille();
-            setTimeout(checkVictoire, 100);
-        }
+    function initGrille() {
+      var phrasesMelangees = melangerTableau(phrases);
+      grilleData = [];
+      for (var i = 0; i < 25; i++) {
+        grilleData.push({ id: i, texte: phrasesMelangees[i], coche: false });
+      }
+      afficherLaGrille();
+      estGagne = false;
+      document.getElementById('msg-victoire').style.display = 'none';
+    }
 
-        function checkVictoire() {
-            var casesCochees = grilleData.map((c, i) => c.coche ? i : -1).filter(i => i >= 0);
-            var gagnant = false;
+    function afficherLaGrille() {
+      var container = document.getElementById('grid');
+      container.innerHTML = '';
+      for (var i = 0; i < grilleData.length; i++) {
+        var div = document.createElement('div');
+        div.className = 'bingo-case';
+        div.textContent = grilleData[i].texte;
+        if (grilleData[i].coche) div.classList.add('checked');
+        div.setAttribute('data-id', i);
+        div.addEventListener('click', function () {
+          var id = parseInt(this.getAttribute('data-id'));
+          cocherCase(id);
+        });
+        container.appendChild(div);
+        ajusterTaillePoliceCase(div); // ajuste la taille
+      }
+    }
 
-            for (var i = 0; i < 5; i++) {
-                if ([0,1,2,3,4].every(j => casesCochees.includes(i*5 + j))) gagnant = true;
-                if ([0,1,2,3,4].every(j => casesCochees.includes(j*5 + i))) gagnant = true;
-            }
+    function cocherCase(id) {
+      if (estGagne) return;
+      grilleData[id].coche = !grilleData[id].coche;
+      afficherLaGrille();
+      setTimeout(checkVictoire, 100);
+    }
 
-            if ([0,6,12,18,24].every(pos => casesCochees.includes(pos))) gagnant = true;
-            if ([4,8,12,16,20].every(pos => casesCochees.includes(pos))) gagnant = true;
+    function checkVictoire() {
+      var casesCochees = grilleData.map((c, i) => c.coche ? i : -1).filter(i => i >= 0);
+      var gagnant = false;
 
-            if (gagnant && !estGagne) {
-                estGagne = true;
-                var msgDiv = document.getElementById('msg-victoire');
-                msgDiv.style.display = 'block';
-                msgDiv.classList.add('victoire-anim');
-            }
-        }
+      for (var i = 0; i < 5; i++) {
+        if ([0,1,2,3,4].every(j => casesCochees.includes(i*5 + j))) gagnant = true;
+        if ([0,1,2,3,4].every(j => casesCochees.includes(j*5 + i))) gagnant = true;
+      }
 
-        function nouvellePartie() {
-            estGagne = false;
-            var msgDiv = document.getElementById('msg-victoire');
-            msgDiv.style.display = 'none';
-            msgDiv.className = 'message-victoire';
-            initGrille();
-        }
+      if ([0,6,12,18,24].every(pos => casesCochees.includes(pos))) gagnant = true;
+      if ([4,8,12,16,20].every(pos => casesCochees.includes(pos))) gagnant = true;
 
-        window.addEventListener('load', initGrille);
-    </script>
+      if (gagnant && !estGagne) {
+        estGagne = true;
+        var msgDiv = document.getElementById('msg-victoire');
+        msgDiv.style.display = 'block';
+        msgDiv.classList.add('victoire-anim');
+      }
+    }
+
+    function nouvellePartie() {
+      estGagne = false;
+      var msgDiv = document.getElementById('msg-victoire');
+      msgDiv.style.display = 'none';
+      msgDiv.className = 'message-victoire';
+      initGrille();
+    }
+
+    window.addEventListener('load', initGrille);
+  </script>
 </body>
 </html>
