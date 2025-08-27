@@ -91,6 +91,8 @@ word-wrap: break-word;
 hyphens: auto;
 -webkit-hyphens: auto;
 -ms-hyphens: auto;
+hyphenate-limit-lines: 2;
+hyphenate-limit-chars: 8 3 3;
 overflow-wrap: break-word;
 overflow: hidden;
 color: #333;
@@ -240,64 +242,42 @@ var phrases = [
 var grilleData = [];
 var estGagne = false;
 
-// Ajuster la taille du texte selon sa longueur
+// Ajuster la taille du texte simplement et sûrement
 function ajusterTailleTexte(element, texte) {
 var longueur = texte.length;
+var taille;
 
-// Tailles plus conservatrices pour mobile
-var tailleBase;
 if (window.innerWidth <= 350) {
-if (longueur > 120) {
-tailleBase = 4;
-} else if (longueur > 100) {
-tailleBase = 5;
-} else if (longueur > 80) {
-tailleBase = 6;
-} else {
-tailleBase = 7;
-}
+if (longueur > 140) taille = 6;
+else if (longueur > 120) taille = 7;
+else if (longueur > 100) taille = 8;
+else if (longueur > 80) taille = 8.5;
+else if (longueur > 60) taille = 9;
+else taille = 9.5;
 } else if (window.innerWidth <= 400) {
-if (longueur > 130) {
-tailleBase = 4;
-} else if (longueur > 110) {
-tailleBase = 5;
-} else if (longueur > 90) {
-tailleBase = 6;
-} else if (longueur > 70) {
-tailleBase = 7;
-} else {
-tailleBase = 8;
-}
+if (longueur > 140) taille = 6.5;
+else if (longueur > 120) taille = 7;
+else if (longueur > 100) taille = 7.5;
+else if (longueur > 80) taille = 8;
+else if (longueur > 60) taille = 8.5;
+else taille = 9;
 } else if (window.innerWidth <= 500) {
-if (longueur > 140) {
-tailleBase = 5;
-} else if (longueur > 120) {
-tailleBase = 6;
-} else if (longueur > 100) {
-tailleBase = 7;
-} else if (longueur > 80) {
-tailleBase = 8;
+if (longueur > 140) taille = 7;
+else if (longueur > 120) taille = 7.5;
+else if (longueur > 100) taille = 8;
+else if (longueur > 80) taille = 8.5;
+else if (longueur > 60) taille = 9;
+else taille = 9.5;
 } else {
-tailleBase = 9;
-}
-} else {
-// Desktop
-if (longueur > 140) {
-tailleBase = 5;
-} else if (longueur > 120) {
-tailleBase = 6;
-} else if (longueur > 100) {
-tailleBase = 7;
-} else if (longueur > 80) {
-tailleBase = 8;
-} else if (longueur > 60) {
-tailleBase = 9;
-} else {
-tailleBase = 10;
-}
+if (longueur > 140) taille = 7.5;
+else if (longueur > 120) taille = 8;
+else if (longueur > 100) taille = 8.5;
+else if (longueur > 80) taille = 9;
+else if (longueur > 60) taille = 9.5;
+else taille = 10;
 }
 
-element.style.fontSize = tailleBase + 'px';
+element.style.fontSize = taille + 'px';
 }
 
 // fonction pour mélanger un tableau
