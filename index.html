@@ -12,7 +12,7 @@ body {
   background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
 }
 .main-container {
-  max-width: 600px; /* container élargi pour 5 cases */
+  max-width: 600px;
   margin: 0 auto;
   background: linear-gradient(to bottom, #ffffff, #f0f8ff);
   border-radius: 15px;
@@ -53,7 +53,7 @@ body {
 }
 .bingo-grid {
   display: grid;
-  grid-template-columns: repeat(5, calc((100% - 24px)/5)); /* 5 cases + gaps */
+  grid-template-columns: repeat(5, calc((100% - 24px)/5)); /* largeur réduite pour éviter chevauchement */
   gap: 6px;
   margin-bottom: 30px;
   background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
@@ -61,7 +61,7 @@ body {
 }
 .bingo-case {
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: 3/4; /* hauteur plus grande que largeur */
   border: 2px solid #9370db;
   border-radius: 8px;
   background: linear-gradient(to bottom, #ffffff, #f0f8ff);
@@ -162,7 +162,7 @@ var grilleData = [];
 var estGagne = false;
 
 function melangerTableau(arr){
-  var t = arr.slice();
+  var t=arr.slice();
   for(var i=t.length-1;i>0;i--){
     var j=Math.floor(Math.random()*(i+1));
     var tmp=t[i]; t[i]=t[j]; t[j]=tmp;
