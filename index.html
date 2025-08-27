@@ -53,15 +53,17 @@ body {
 }
 .bingo-grid {
   display: grid;
-  grid-template-columns: repeat(5, calc((100% - 24px)/5)); /* largeur réduite pour éviter chevauchement */
+  grid-template-columns: repeat(5, 1fr);
   gap: 6px;
   margin-bottom: 30px;
   background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
   border-radius: 12px;
+  padding: 0;
+  box-sizing: border-box;
 }
 .bingo-case {
   width: 100%;
-  aspect-ratio: 3/4; /* hauteur plus grande que largeur */
+  aspect-ratio: 3/4;
   border: 2px solid #9370db;
   border-radius: 8px;
   background: linear-gradient(to bottom, #ffffff, #f0f8ff);
@@ -75,6 +77,7 @@ body {
   color: #333;
   overflow: hidden;
   word-break: break-word;
+  box-sizing: border-box;
 }
 .bingo-case:hover {
   background: #e6e6fa;
