@@ -239,7 +239,6 @@ var phrases = [
 ];
 
 var grilleData = [];
-var estGagne = false;
 
 function calculerTaille(texte) {
 var longueur = texte.length;
@@ -306,7 +305,6 @@ coche: false
 });
 }
 afficherLaGrille();
-estGagne = false;
 document.getElementById('msg-victoire').style.display = 'none';
 }
 
@@ -338,7 +336,6 @@ container.appendChild(div);
 
 // Cocher/décocher une case
 function cocherCase(id) {
-if (estGagne) return; // Plus de clics si déjà gagné
 grilleData[id].coche = !grilleData[id].coche;
 afficherLaGrille();
 // Vérifier victoire après un petit délai
@@ -407,16 +404,18 @@ diag2++;
 }
 if (diag2 === 5) gagnant = true;
 
-if (gagnant && !estGagne) {
-estGagne = true;
+if (gagnant) {
 var msgDiv = document.getElementById('msg-victoire');
 msgDiv.style.display = 'block';
-msgDiv.className = msgDiv.className + ' victoire-anim';
+msgDiv.className = 'message-victoire victoire-anim';
+} else {
+var msgDiv = document.getElementById('msg-victoire');
+msgDiv.style.display = 'none';
+msgDiv.className = 'message-victoire';
 }
 }
 
 function nouvellePartie() {
-estGagne = false;
 var msgDiv = document.getElementById('msg-victoire');
 msgDiv.style.display = 'none';
 msgDiv.className = 'message-victoire';
