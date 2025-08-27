@@ -12,7 +12,7 @@
       background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
     }
     .main-container {
-      max-width: 500px; /* légèrement plus large pour mieux contenir les cases */
+      max-width: 540px;
       margin: 0 auto;
       background: linear-gradient(to bottom, #ffffff, #f0f8ff);
       border-radius: 15px;
@@ -53,7 +53,7 @@
     }
     .bingo-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap: 6px;
       margin-bottom: 30px;
       background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
@@ -64,12 +64,11 @@
     .bingo-case {
       aspect-ratio: 3 / 4;
       width: 100%;
-      max-width: 90px; /* limite la largeur pour éviter chevauchement */
-      min-height: 120px; /* plus haute pour smartphone */
+      max-width: 100px;
+      min-height: 120px;
       border: 2px solid #9370db;
-      background: linear-gradient(to bottom, #ffffff, #f0f8ff);
       border-radius: 8px;
-      cursor: pointer;
+      background: linear-gradient(to bottom, #ffffff, #f0f8ff);
       display: flex;
       justify-content: center;
       align-items: center;
