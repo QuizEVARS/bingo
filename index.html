@@ -6,100 +6,205 @@
 <title>Bingo de Pré-Rentrée</title>
 <style>
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+padding: 20px;
+background: #87ceeb;
+background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
 }
+
 .main-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  background: linear-gradient(to bottom, #ffffff, #f0f8ff);
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  padding: 25px;
-  border: 2px solid #4169e1;
-  box-sizing: border-box;
+max-width: 450px;
+margin: 0 auto;
+background: #ffffff;
+background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+border-radius: 15px;
+box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+padding: 25px;
+border: 2px solid #4169e1;
 }
+
 .titre {
-  text-align: center;
-  color: #4169e1;
-  font-size: 28px;
-  margin-bottom: 25px;
-  font-weight: bold;
+text-align: center;
+color: #4169e1;
+font-size: 28px;
+margin-bottom: 25px;
+font-weight: bold;
+text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+font-family: Arial, sans-serif;
 }
+
 .message-victoire {
-  text-align: center;
-  padding: 18px;
-  background: linear-gradient(45deg, #ffd700, #ff6347, #ff1493);
-  border-radius: 12px;
-  margin-bottom: 25px;
-  display: none;
-  border: 3px solid #ff4500;
+text-align: center;
+padding: 18px;
+background: #ffd700;
+background: linear-gradient(45deg, #ffd700, #ff6347, #ff1493);
+border-radius: 12px;
+margin-bottom: 25px;
+display: none;
+border: 3px solid #ff4500;
 }
-.message-victoire h2 { margin:0 0 10px 0; font-size:24px; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
-.message-victoire p { margin:0; font-size:18px; color:#fff; font-weight:bold; text-shadow:1px 1px 2px rgba(0,0,0,0.3);}
+
+.message-victoire h2 {
+margin: 0 0 10px 0;
+font-size: 24px;
+color: #fff;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+font-family: Arial, sans-serif;
+}
+
+.message-victoire p {
+margin: 0;
+font-size: 18px;
+color: #fff;
+font-weight: bold;
+text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+font-family: Arial, sans-serif;
+}
+
 .bingo-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px; /* écart obligatoire entre les cases */
-  margin-bottom: 30px;
-  background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
-  border-radius: 12px;
-  padding: 0;
-  box-sizing: border-box;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+gap: 5px;
+margin-bottom: 30px;
+padding: 10px;
+background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
+border-radius: 12px;
 }
+
 .bingo-case {
-  width: 100%;
-  aspect-ratio: 3/4; /* hauteur légèrement plus grande que la largeur */
-  border: 2px solid #9370db;
-  border-radius: 8px;
-  background: linear-gradient(to bottom, #ffffff, #f0f8ff);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 5px;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  font-weight: 500;
-  color: #333;
-  overflow: hidden;
-  word-break: break-word;
+height: 80px;
+border: 2px solid #9370db;
+background: #f8f8ff;
+background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+border-radius: 8px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 6px;
+font-size: 9px;
+line-height: 1.2;
+text-align: center;
+transition: all 0.3s;
+word-wrap: break-word;
+overflow: hidden;
+color: #333;
+font-family: 'Segoe UI', Tahoma, sans-serif;
+font-weight: 500;
 }
-.bingo-case:hover { background: #e6e6fa; transform: scale(1.02); border-color: #4169e1; }
-.bingo-case.checked { background: linear-gradient(135deg, rgba(50,205,50,0.7), rgba(34,139,34,0.7)); border-color: #228b22; box-shadow:0 4px 8px rgba(0,0,0,0.2);}
-.bingo-case.checked:hover { transform: scale(1); }
+
+.bingo-case:hover {
+background: #e6e6fa;
+transform: scale(1.02);
+border-color: #4169e1;
+}
+
+.bingo-case.checked {
+background: rgba(50, 205, 50, 0.3);
+border-color: #32cd32;
+box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+color: #333;
+}
+
+.bingo-case.checked:hover {
+background: rgba(50, 205, 50, 0.4);
+transform: scale(1);
+}
+
 .reset-btn {
-  display: block;
-  margin: 0 auto;
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #ff6347, #ff1493, #4169e1);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  font-size: 18px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  border: 2px solid #ff4500;
+display: block;
+margin: 0 auto;
+padding: 15px 30px;
+background: #ff6347;
+background: linear-gradient(135deg, #ff6347, #ff1493, #4169e1);
+color: white;
+border: none;
+border-radius: 25px;
+font-size: 18px;
+cursor: pointer;
+font-weight: bold;
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+border: 2px solid #ff4500;
+font-family: Arial, sans-serif;
 }
-.reset-btn:hover { transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.4); background: linear-gradient(135deg,#ff4500,#ff1493,#4169e1);}
-@keyframes blink {0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}}
-.victoire-anim {animation: blink 0.8s infinite;}
+
+.reset-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+background: linear-gradient(135deg, #ff4500, #ff1493, #4169e1);
+}
+
+@keyframes blink {
+0% { opacity: 1; }
+50% { opacity: 0.7; }
+100% { opacity: 1; }
+}
+
+.victoire-anim {
+animation: blink 0.8s infinite;
+}
+
+/* Pour les téléphones */
+@media (max-width: 500px) {
+.main-container {
+max-width: 95%;
+padding: 15px;
+}
+
+.bingo-case {
+height: 100px;
+font-size: 10px;
+padding: 4px;
+line-height: 1.1;
+}
+
+.titre {
+font-size: 24px;
+}
+
+.bingo-grid {
+gap: 3px;
+padding: 8px;
+}
+}
+
+@media (max-width: 400px) {
+.bingo-case {
+height: 110px;
+font-size: 9px;
+padding: 3px;
+line-height: 1.0;
+}
+
+.bingo-grid {
+gap: 2px;
+}
+}
+
+@media (max-width: 350px) {
+.bingo-case {
+height: 115px;
+font-size: 8px;
+}
+}
 </style>
 </head>
 <body>
 <div class="main-container">
-  <h1 class="titre">BINGO de Pré-Rentrée 🦎</h1>
-  <div class="message-victoire" id="msg-victoire">
-    <h2>BINGO !</h2>
-    <p>Une pré-rentrée réussie 😎</p>
-  </div>
-  <div class="bingo-grid" id="grid"></div>
-  <button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
+<h1 class="titre">BINGO de Pré-Rentrée 🦎</h1>
+<div class="message-victoire" id="msg-victoire">
+<h2> BINGO ! </h2>
+<p>Une pré-rentrée réussie 😎</p>
+</div>
+<div class="bingo-grid" id="grid">
+<!-- cases générées en JS -->
+</div>
+<button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
 </div>
 
 <script>
+// Toutes les phrases du bingo
 var phrases = [
 "Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
 "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
@@ -128,49 +233,166 @@ var phrases = [
 "Florence prend frénétiquement des notes"
 ];
 
-var grilleData=[], estGagne=false;
+var grilleData = [];
+var estGagne = false;
 
-function melangerTableau(arr){var t=arr.slice(); for(var i=t.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)); var tmp=t[i]; t[i]=t[j]; t[j]=tmp;} return t;}
-
-function ajusterTaillePoliceCase(div){
-  var taille=14; div.style.fontSize=taille+"px";
-  while((div.scrollHeight>div.clientHeight || div.scrollWidth>div.clientWidth)&&taille>6){taille--; div.style.fontSize=taille+"px";}
+// fonction pour mélanger un tableau
+function melangerTableau(arr) {
+var nouveauTableau = [];
+for (var i = 0; i < arr.length; i++) {
+nouveauTableau.push(arr[i]);
+}
+// mélange Fisher-Yates
+for (var i = nouveauTableau.length - 1; i > 0; i--) {
+var j = Math.floor(Math.random() * (i + 1));
+var temp = nouveauTableau[i];
+nouveauTableau[i] = nouveauTableau[j];
+nouveauTableau[j] = temp;
+}
+return nouveauTableau;
 }
 
-function initGrille(){
-  var phrasesMelangees=melangerTableau(phrases);
-  grilleData=[]; for(var i=0;i<25;i++){grilleData.push({id:i,texte:phrasesMelangees[i],coche:false});}
-  afficherLaGrille(); estGagne=false; document.getElementById('msg-victoire').style.display='none';
+// Initialiser la grille
+function initGrille() {
+var phrasesMelangees = melangerTableau(phrases);
+grilleData = [];
+for (var i = 0; i < 25; i++) {
+grilleData.push({
+id: i,
+texte: phrasesMelangees[i],
+coche: false
+});
+}
+afficherLaGrille();
+estGagne = false;
+document.getElementById('msg-victoire').style.display = 'none';
 }
 
-function afficherLaGrille(){
-  var container=document.getElementById('grid'); container.innerHTML='';
-  for(var i=0;i<grilleData.length;i++){
-    var div=document.createElement('div'); div.className='bingo-case'; div.textContent=grilleData[i].texte;
-    if(grilleData[i].coche) div.classList.add('checked');
-    div.setAttribute('data-id',i);
-    div.addEventListener('click',function(){ cocherCase(parseInt(this.getAttribute('data-id'))); });
-    container.appendChild(div);
-    ajusterTaillePoliceCase(div);
-  }
+// Afficher la grille sur la page
+function afficherLaGrille() {
+var container = document.getElementById('grid');
+container.innerHTML = '';
+for (var i = 0; i < grilleData.length; i++) {
+var div = document.createElement('div');
+div.className = 'bingo-case';
+if (grilleData[i].coche) {
+div.className = div.className + ' checked';
+}
+div.textContent = grilleData[i].texte;
+
+// Adapter la taille selon la longueur du texte
+var longueurTexte = grilleData[i].texte.length;
+if (longueurTexte > 120) {
+div.style.fontSize = '7px';
+} else if (longueurTexte > 90) {
+div.style.fontSize = '8px';
+} else if (longueurTexte > 60) {
+div.style.fontSize = '9px';
+} else {
+div.style.fontSize = '10px';
 }
 
-function cocherCase(id){ if(estGagne) return; grilleData[id].coche=!grilleData[id].coche; afficherLaGrille(); setTimeout(checkVictoire,100); }
-
-function checkVictoire(){
-  var casesCochees=grilleData.map((c,i)=>c.coche?i:-1).filter(i=>i>=0); var gagnant=false;
-  for(var i=0;i<5;i++){
-    if([0,1,2,3,4].every(j=>casesCochees.includes(i*5+j))) gagnant=true;
-    if([0,1,2,3,4].every(j=>casesCochees.includes(j*5+i))) gagnant=true;
-  }
-  if([0,6,12,18,24].every(pos=>casesCochees.includes(pos))) gagnant=true;
-  if([4,8,12,16,20].every(pos=>casesCochees.includes(pos))) gagnant=true;
-  if(gagnant && !estGagne){ estGagne=true; var msgDiv=document.getElementById('msg-victoire'); msgDiv.style.display='block'; msgDiv.classList.add('victoire-anim'); }
+// Ajouter l'événement de clic
+div.setAttribute('data-id', i);
+div.addEventListener('click', function() {
+var id = parseInt(this.getAttribute('data-id'));
+cocherCase(id);
+});
+container.appendChild(div);
+}
 }
 
-function nouvellePartie(){ estGagne=false; var msgDiv=document.getElementById('msg-victoire'); msgDiv.style.display='none'; msgDiv.className='message-victoire'; initGrille(); }
+// Cocher/décocher une case
+function cocherCase(id) {
+if (estGagne) return; // Plus de clics si déjà gagné
+grilleData[id].coche = !grilleData[id].coche;
+afficherLaGrille();
+// Vérifier victoire après un petit délai
+setTimeout(function() {
+checkVictoire();
+}, 100);
+}
 
-window.addEventListener('load',initGrille);
+// Vérifier s'il y a victoire
+function checkVictoire() {
+var casescochees = [];
+// Récupérer les cases cochées
+for (var i = 0; i < grilleData.length; i++) {
+if (grilleData[i].coche === true) {
+casescochees.push(i);
+}
+}
+
+var gagnant = false;
+
+// Vérifier lignes horizontales
+for (var ligne = 0; ligne < 5; ligne++) {
+var nbCochees = 0;
+for (var col = 0; col < 5; col++) {
+var position = ligne * 5 + col;
+if (casescochees.indexOf(position) !== -1) {
+nbCochees++;
+}
+}
+if (nbCochees == 5) {
+gagnant = true;
+}
+}
+
+// Vérifier colonnes verticales
+for (var col = 0; col < 5; col++) {
+var nbCochees = 0;
+for (var ligne = 0; ligne < 5; ligne++) {
+var position = ligne * 5 + col;
+if (casescochees.indexOf(position) >= 0) {
+nbCochees++;
+}
+}
+if (nbCochees === 5) {
+gagnant = true;
+}
+}
+
+// Diagonale principale (0,6,12,18,24)
+var diag1 = 0;
+var positions1 = [0, 6, 12, 18, 24];
+for (var i = 0; i < positions1.length; i++) {
+if (casescochees.indexOf(positions1[i]) != -1) {
+diag1++;
+}
+}
+if (diag1 == 5) gagnant = true;
+
+// Diagonale inverse (4,8,12,16,20)
+var diag2 = 0;
+var positions2 = [4, 8, 12, 16, 20];
+for (var i = 0; i < positions2.length; i++) {
+if (casescochees.indexOf(positions2[i]) >= 0) {
+diag2++;
+}
+}
+if (diag2 === 5) gagnant = true;
+
+if (gagnant && !estGagne) {
+estGagne = true;
+var msgDiv = document.getElementById('msg-victoire');
+msgDiv.style.display = 'block';
+msgDiv.className = msgDiv.className + ' victoire-anim';
+}
+}
+
+function nouvellePartie() {
+estGagne = false;
+var msgDiv = document.getElementById('msg-victoire');
+msgDiv.style.display = 'none';
+msgDiv.className = 'message-victoire';
+initGrille();
+}
+
+// Démarrer quand la page est chargée
+window.addEventListener('load', function() {
+initGrille();
+});
 </script>
 </body>
 </html>
