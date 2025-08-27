@@ -12,7 +12,7 @@
       background: linear-gradient(to bottom right, #87ceeb, #dda0dd, #f0e68c);
     }
     .main-container {
-      max-width: 520px; /* un peu plus large pour laisser plus de place aux cases */
+      max-width: 500px; /* légèrement plus large pour mieux contenir les cases */
       margin: 0 auto;
       background: linear-gradient(to bottom, #ffffff, #f0f8ff);
       border-radius: 15px;
@@ -53,8 +53,8 @@
     }
     .bingo-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
       margin-bottom: 30px;
       background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
       border-radius: 12px;
@@ -63,7 +63,9 @@
     }
     .bingo-case {
       aspect-ratio: 3 / 4;
-      min-height: 95px; /* laisse plus de place au texte */
+      width: 100%;
+      max-width: 90px; /* limite la largeur pour éviter chevauchement */
+      min-height: 120px; /* plus haute pour smartphone */
       border: 2px solid #9370db;
       background: linear-gradient(to bottom, #ffffff, #f0f8ff);
       border-radius: 8px;
@@ -204,7 +206,7 @@
         div.textContent = grilleData[i].texte;
         if (grilleData[i].coche) div.classList.add('checked');
         div.setAttribute('data-id', i);
-        div.addEventListener('click', function () {
+        div.addEventListener('click', function() {
           var id = parseInt(this.getAttribute('data-id'));
           cocherCase(id);
         });
@@ -221,27 +223,27 @@
     }
 
     function checkVictoire() {
-      var casesCochees = grilleData.map((c,i) => c.coche ? i : -1).filter(i => i>=0);
+      var casesCochees = grilleData.map((c,i)=>c.coche?i:-1).filter(i=>i>=0);
       var gagnant = false;
-      for (var i = 0; i < 5; i++) {
-        if ([0,1,2,3,4].every(j => casesCochees.includes(i*5+j))) gagnant = true;
-        if ([0,1,2,3,4].every(j => casesCochees.includes(j*5+i))) gagnant = true;
+      for (var i=0;i<5;i++){
+        if ([0,1,2,3,4].every(j=>casesCochees.includes(i*5+j))) gagnant=true;
+        if ([0,1,2,3,4].every(j=>casesCochees.includes(j*5+i))) gagnant=true;
       }
-      if ([0,6,12,18,24].every(pos => casesCochees.includes(pos))) gagnant = true;
-      if ([4,8,12,16,20].every(pos => casesCochees.includes(pos))) gagnant = true;
-      if (gagnant && !estGagne) {
-        estGagne = true;
-        var msgDiv = document.getElementById('msg-victoire');
-        msgDiv.style.display = 'block';
+      if ([0,6,12,18,24].every(pos=>casesCochees.includes(pos))) gagnant=true;
+      if ([4,8,12,16,20].every(pos=>casesCochees.includes(pos))) gagnant=true;
+      if(gagnant && !estGagne){
+        estGagne=true;
+        var msgDiv=document.getElementById('msg-victoire');
+        msgDiv.style.display='block';
         msgDiv.classList.add('victoire-anim');
       }
     }
 
-    function nouvellePartie() {
-      estGagne = false;
-      var msgDiv = document.getElementById('msg-victoire');
-      msgDiv.style.display = 'none';
-      msgDiv.className = 'message-victoire';
+    function nouvellePartie(){
+      estGagne=false;
+      var msgDiv=document.getElementById('msg-victoire');
+      msgDiv.style.display='none';
+      msgDiv.className='message-victoire';
       initGrille();
     }
 
