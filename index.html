@@ -88,6 +88,10 @@ line-height: 1.3;
 text-align: center;
 transition: all 0.3s;
 word-wrap: break-word;
+hyphens: auto;
+-webkit-hyphens: auto;
+-ms-hyphens: auto;
+overflow-wrap: break-word;
 overflow: hidden;
 color: #333;
 font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -240,19 +244,60 @@ var estGagne = false;
 function ajusterTailleTexte(element, texte) {
 var longueur = texte.length;
 
-if (longueur > 140) {
-element.style.fontSize = '5px';
-} else if (longueur > 120) {
-element.style.fontSize = '6px';
+// Tailles plus conservatrices pour mobile
+var tailleBase;
+if (window.innerWidth <= 350) {
+if (longueur > 120) {
+tailleBase = 4;
 } else if (longueur > 100) {
-element.style.fontSize = '7px';
+tailleBase = 5;
 } else if (longueur > 80) {
-element.style.fontSize = '8px';
-} else if (longueur > 60) {
-element.style.fontSize = '9px';
+tailleBase = 6;
 } else {
-element.style.fontSize = '10px';
+tailleBase = 7;
 }
+} else if (window.innerWidth <= 400) {
+if (longueur > 130) {
+tailleBase = 4;
+} else if (longueur > 110) {
+tailleBase = 5;
+} else if (longueur > 90) {
+tailleBase = 6;
+} else if (longueur > 70) {
+tailleBase = 7;
+} else {
+tailleBase = 8;
+}
+} else if (window.innerWidth <= 500) {
+if (longueur > 140) {
+tailleBase = 5;
+} else if (longueur > 120) {
+tailleBase = 6;
+} else if (longueur > 100) {
+tailleBase = 7;
+} else if (longueur > 80) {
+tailleBase = 8;
+} else {
+tailleBase = 9;
+}
+} else {
+// Desktop
+if (longueur > 140) {
+tailleBase = 5;
+} else if (longueur > 120) {
+tailleBase = 6;
+} else if (longueur > 100) {
+tailleBase = 7;
+} else if (longueur > 80) {
+tailleBase = 8;
+} else if (longueur > 60) {
+tailleBase = 9;
+} else {
+tailleBase = 10;
+}
+}
+
+element.style.fontSize = tailleBase + 'px';
 }
 
 // fonction pour mélanger un tableau
