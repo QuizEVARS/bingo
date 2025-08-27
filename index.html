@@ -70,25 +70,30 @@
             border-radius: 12px;
         }
 
+        /* === BINGO CASES UNIFORMES ET CENTRÉES === */
         .bingo-case {
-            height: 80px;
+            height: 100px; /* hauteur uniforme */
             border: 2px solid #9370db;
             background: linear-gradient(to bottom, #ffffff, #f0f8ff);
             border-radius: 8px;
             cursor: pointer;
+
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6px;
+            flex-direction: column;
+            justify-content: center; /* centre verticalement */
+            align-items: center;     /* centre horizontalement */
+
+            padding: 10px;
             font-size: 9px;
             line-height: 1.2;
             text-align: center;
-            transition: all 0.3s;
-            word-wrap: break-word;
-            word-break: break-word;
+
+            white-space: normal;
+            word-break: normal;
             overflow-wrap: break-word;
-            hyphens: auto;
-            overflow: hidden;
+            hyphens: none;
+
+            transition: all 0.3s;
             color: #333;
             font-family: 'Segoe UI', Tahoma, sans-serif;
             font-weight: 500;
@@ -105,7 +110,7 @@
             background: linear-gradient(135deg, rgba(50, 205, 50, 0.7), rgba(34, 139, 34, 0.7));
             color: #333;
             border-color: #228b22;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .bingo-case.checked:hover {
@@ -113,9 +118,32 @@
             transform: scale(1);
         }
 
-        .bingo-case .texte-case {
-            position: relative;
-            z-index: 1;
+        /* Responsive pour téléphones */
+        @media (max-width: 500px) {
+            .bingo-case {
+                height: 90px;
+                font-size: 10px;
+                padding: 8px;
+                line-height: 1.1;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .bingo-case {
+                height: 80px;
+                font-size: 9px;
+                padding: 6px;
+                line-height: 1.05;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .bingo-case {
+                height: 70px;
+                font-size: 8px;
+                padding: 5px;
+                line-height: 1.0;
+            }
         }
 
         .reset-btn {
@@ -141,65 +169,13 @@
         }
 
         @keyframes blink {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.7;
-            }
-
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
 
         .victoire-anim {
             animation: blink 0.8s infinite;
-        }
-
-        /* Pour les téléphones */
-        @media (max-width: 500px) {
-            .main-container {
-                max-width: 95%;
-                padding: 15px;
-            }
-
-            .bingo-case {
-                height: 100px;
-                font-size: 10px;
-                padding: 4px;
-                line-height: 1.1;
-            }
-
-            .titre {
-                font-size: 24px;
-            }
-
-            .bingo-grid {
-                gap: 3px;
-                padding: 8px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .bingo-case {
-                height: 110px;
-                font-size: 9px;
-                padding: 3px;
-                line-height: 1.0;
-            }
-
-            .bingo-grid {
-                gap: 2px;
-            }
-        }
-
-        @media (max-width: 350px) {
-            .bingo-case {
-                height: 115px;
-                font-size: 8px;
-            }
         }
     </style>
 </head>
@@ -213,9 +189,7 @@
             <p>Une pré-rentrée réussie 😎</p>
         </div>
 
-        <div class="bingo-grid" id="grid">
-            <!-- cases générées en JS -->
-        </div>
+        <div class="bingo-grid" id="grid"></div>
 
         <button class="reset-btn" onclick="nouvellePartie()">🔄 Recommencer</button>
     </div>
@@ -263,15 +237,18 @@
             return nouveauTableau;
         }
 
+        function ajusterTaillePolice(texte) {
+            if (texte.length > 120) return '8px';
+            if (texte.length > 100) return '9px';
+            if (texte.length > 70) return '10px';
+            return '11px';
+        }
+
         function initGrille() {
             var phrasesMelangees = melangerTableau(phrases);
             grilleData = [];
             for (var i = 0; i < 25; i++) {
-                grilleData.push({
-                    id: i,
-                    texte: phrasesMelangees[i],
-                    coche: false
-                });
+                grilleData.push({ id: i, texte: phrasesMelangees[i], coche: false });
             }
             afficherLaGrille();
             estGagne = false;
@@ -285,6 +262,7 @@
                 var div = document.createElement('div');
                 div.className = 'bingo-case';
                 div.textContent = grilleData[i].texte;
+                div.style.fontSize = ajusterTaillePolice(grilleData[i].texte);
                 if (grilleData[i].coche) div.classList.add('checked');
                 div.setAttribute('data-id', i);
                 div.addEventListener('click', function () {
@@ -333,5 +311,4 @@
         window.addEventListener('load', initGrille);
     </script>
 </body>
-
 </html>
