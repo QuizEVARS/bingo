@@ -27,7 +27,6 @@ body {
   font-size: 28px;
   margin-bottom: 25px;
   font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 .message-victoire {
   text-align: center;
@@ -38,28 +37,17 @@ body {
   display: none;
   border: 3px solid #ff4500;
 }
-.message-victoire h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-.message-victoire p {
-  margin: 0;
-  font-size: 18px;
-  color: #fff;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
+.message-victoire h2 { margin:0 0 10px 0; font-size:24px; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
+.message-victoire p { margin:0; font-size:18px; color:#fff; font-weight:bold; text-shadow:1px 1px 2px rgba(0,0,0,0.3);}
 .bingo-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2px; /* faible espace entre les cases */
+  gap: 2px;
   margin-bottom: 30px;
   background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
   border-radius: 12px;
   padding: 0;
   box-sizing: border-box;
+  grid-template-columns: repeat(5, 1fr);
 }
 .bingo-case {
   width: 100%;
@@ -78,19 +66,9 @@ body {
   overflow: hidden;
   word-break: break-word;
 }
-.bingo-case:hover {
-  background: #e6e6fa;
-  transform: scale(1.02);
-  border-color: #4169e1;
-}
-.bingo-case.checked {
-  background: linear-gradient(135deg, rgba(50,205,50,0.7), rgba(34,139,34,0.7));
-  border-color: #228b22;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.bingo-case.checked:hover {
-  transform: scale(1);
-}
+.bingo-case:hover { background: #e6e6fa; transform: scale(1.02); border-color: #4169e1; }
+.bingo-case.checked { background: linear-gradient(135deg, rgba(50,205,50,0.7), rgba(34,139,34,0.7)); border-color: #228b22; box-shadow:0 4px 8px rgba(0,0,0,0.2);}
+.bingo-case.checked:hover { transform: scale(1); }
 .reset-btn {
   display: block;
   margin: 0 auto;
@@ -102,22 +80,16 @@ body {
   font-size: 18px;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
   border: 2px solid #ff4500;
 }
-.reset-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  background: linear-gradient(135deg, #ff4500, #ff1493, #4169e1);
-}
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { opacity: 1; }
-}
-.victoire-anim {
-  animation: blink 0.8s infinite;
-}
+.reset-btn:hover { transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.4); background: linear-gradient(135deg,#ff4500,#ff1493,#4169e1);}
+@keyframes blink {0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}}
+.victoire-anim {animation: blink 0.8s infinite;}
+
+/* Responsive */
+@media (max-width: 600px) { .bingo-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 400px) { .bingo-grid { grid-template-columns: repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -133,112 +105,74 @@ body {
 
 <script>
 var phrases = [
-  "Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
-  "Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
-  "Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
-  "Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
-  "La direction propose aux profs docs de parler, et Angèle refuse",
-  "Cris intempestifs : « Et les emplois du temps ? »",
-  "Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
-  "Notre groupe WhatsApp s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
-  "KCD fait la tronche lors des prises de parole syndicales",
-  "On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
-  "Le mot « laïcité » sort avant la fin de la première heure de la plénière",
-  "La photocopieuse est déjà en panne",
-  "Discours inutile de KCD sur le sens humain de notre métier",
-  "Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
-  "Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
-  "Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
-  "« Il faut faire attention aux travers de la bienveillance »",
-  "Sabrina encourage les collègues à cotiser à l'amicale",
-  "Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
-  "Quelqu'un arrive en retard et se fait afficher par les cheffes",
-  "Aucun changement dans l'orga « visite aux PP » de l'après-midi",
-  "Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
-  "Bruits des collègues d'EPS au fond",
-  "KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
-  "Florence prend frénétiquement des notes"
+"Laurent sort du coiffeur/porte un polo et montre une nouvelle ressource péda à un.e collègue sur son ordi",
+"Un.e collègue découvre que ses vœux d'EDT ont été ignorés",
+"Au moins 3 remarques faites à Rémy G. sur sa coupe de cheveux (dont David C.)",
+"Oumar corrige un propos de KCD sans lever la main (il l'interrompt)",
+"La direction propose aux profs docs de parler, et Angèle refuse",
+"Cris intempestifs : « Et les emplois du temps ? »",
+"Long (mais méticuleux) PowerPoint d'Elisabeth (que personne n'écoute)",
+"Notre groupe WhatsApp s'assoit naturellement au milieu à gauche (côté fenêtre) (90% de l'effectif)",
+"KCD fait la tronche lors des prises de parole syndicales",
+"On reproche à la vie sco que les AED ne circulent pas assez dans les couloirs",
+"Le mot « laïcité » sort avant la fin de la première heure de la plénière",
+"La photocopieuse est déjà en panne",
+"Discours inutile de KCD sur le sens humain de notre métier",
+"Sous-entendu de KCD sur la coopération nécessaire entre les 2 listes du CA",
+"Commentaire sur la réforme du pro de l'an dernier par Jérôme Sarazin",
+"Les CPE annoncent un nouveau changement sur la règle des 5 min de retard",
+"« Il faut faire attention aux travers de la bienveillance »",
+"Sabrina encourage les collègues à cotiser à l'amicale",
+"Commentaires désagréables lors de la prise de parole de Roxane et Rémy",
+"Quelqu'un arrive en retard et se fait afficher par les cheffes",
+"Aucun changement dans l'orga « visite aux PP » de l'après-midi",
+"Une remarque gênante est faite par quelqu'un.e sur le physique d'un.e nouveau/elle collègue",
+"Bruits des collègues d'EPS au fond",
+"KCD présente les personnels d'entretien en précisant qu'iels doivent partir très vite",
+"Florence prend frénétiquement des notes"
 ];
 
-var grilleData = [];
-var estGagne = false;
+var grilleData=[], estGagne=false;
 
-function melangerTableau(arr){
-  var t=arr.slice();
-  for(var i=t.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1));
-    var tmp=t[i]; t[i]=t[j]; t[j]=tmp;
-  }
-  return t;
-}
+function melangerTableau(arr){var t=arr.slice(); for(var i=t.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)); var tmp=t[i]; t[i]=t[j]; t[j]=tmp;} return t;}
 
 function ajusterTaillePoliceCase(div){
-  var taille=14;
-  div.style.fontSize=taille+"px";
-  while((div.scrollHeight>div.clientHeight || div.scrollWidth>div.clientWidth) && taille>6){
-    taille--; div.style.fontSize=taille+"px";
-  }
+  var taille=14; div.style.fontSize=taille+"px";
+  while((div.scrollHeight>div.clientHeight || div.scrollWidth>div.clientWidth)&&taille>6){taille--; div.style.fontSize=taille+"px";}
 }
 
 function initGrille(){
   var phrasesMelangees=melangerTableau(phrases);
-  grilleData=[];
-  for(var i=0;i<25;i++){
-    grilleData.push({id:i, texte:phrasesMelangees[i], coche:false});
-  }
-  afficherLaGrille();
-  estGagne=false;
-  document.getElementById('msg-victoire').style.display='none';
+  grilleData=[]; for(var i=0;i<25;i++){grilleData.push({id:i,texte:phrasesMelangees[i],coche:false});}
+  afficherLaGrille(); estGagne=false; document.getElementById('msg-victoire').style.display='none';
 }
 
 function afficherLaGrille(){
-  var container=document.getElementById('grid');
-  container.innerHTML='';
+  var container=document.getElementById('grid'); container.innerHTML='';
   for(var i=0;i<grilleData.length;i++){
-    var div=document.createElement('div');
-    div.className='bingo-case';
-    div.textContent=grilleData[i].texte;
+    var div=document.createElement('div'); div.className='bingo-case'; div.textContent=grilleData[i].texte;
     if(grilleData[i].coche) div.classList.add('checked');
     div.setAttribute('data-id',i);
-    div.addEventListener('click',function(){
-      cocherCase(parseInt(this.getAttribute('data-id')));
-    });
+    div.addEventListener('click',function(){ cocherCase(parseInt(this.getAttribute('data-id'))); });
     container.appendChild(div);
     ajusterTaillePoliceCase(div);
   }
 }
 
-function cocherCase(id){
-  if(estGagne) return;
-  grilleData[id].coche=!grilleData[id].coche;
-  afficherLaGrille();
-  setTimeout(checkVictoire,100);
-}
+function cocherCase(id){ if(estGagne) return; grilleData[id].coche=!grilleData[id].coche; afficherLaGrille(); setTimeout(checkVictoire,100); }
 
 function checkVictoire(){
-  var casesCochees=grilleData.map((c,i)=>c.coche?i:-1).filter(i=>i>=0);
-  var gagnant=false;
+  var casesCochees=grilleData.map((c,i)=>c.coche?i:-1).filter(i=>i>=0); var gagnant=false;
   for(var i=0;i<5;i++){
     if([0,1,2,3,4].every(j=>casesCochees.includes(i*5+j))) gagnant=true;
     if([0,1,2,3,4].every(j=>casesCochees.includes(j*5+i))) gagnant=true;
   }
   if([0,6,12,18,24].every(pos=>casesCochees.includes(pos))) gagnant=true;
   if([4,8,12,16,20].every(pos=>casesCochees.includes(pos))) gagnant=true;
-  if(gagnant && !estGagne){
-    estGagne=true;
-    var msgDiv=document.getElementById('msg-victoire');
-    msgDiv.style.display='block';
-    msgDiv.classList.add('victoire-anim');
-  }
+  if(gagnant && !estGagne){ estGagne=true; var msgDiv=document.getElementById('msg-victoire'); msgDiv.style.display='block'; msgDiv.classList.add('victoire-anim'); }
 }
 
-function nouvellePartie(){
-  estGagne=false;
-  var msgDiv=document.getElementById('msg-victoire');
-  msgDiv.style.display='none';
-  msgDiv.className='message-victoire';
-  initGrille();
-}
+function nouvellePartie(){ estGagne=false; var msgDiv=document.getElementById('msg-victoire'); msgDiv.style.display='none'; msgDiv.className='message-victoire'; initGrille(); }
 
 window.addEventListener('load',initGrille);
 </script>
