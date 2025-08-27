@@ -236,37 +236,23 @@ var phrases = [
 var grilleData = [];
 var estGagne = false;
 
-// Optimiser la taille du texte pour qu'il remplisse au mieux la case
-function optimiserTailleTexte(element, texte) {
-var mots = texte.split(' ');
-var longueurMoyenneMot = texte.replace(/ /g, '').length / mots.length;
-var nbMots = mots.length;
+// Ajuster la taille du texte selon sa longueur
+function ajusterTailleTexte(element, texte) {
+var longueur = texte.length;
 
-// Estimer la taille optimale selon différents critères
-var taille = 10;
-if (texte.length > 130) {
-taille = 6;
-} else if (texte.length > 100) {
-taille = 7;
-} else if (texte.length > 80) {
-taille = 8;
-} else if (texte.length > 60) {
-taille = 9;
+if (longueur > 140) {
+element.style.fontSize = '5px';
+} else if (longueur > 120) {
+element.style.fontSize = '6px';
+} else if (longueur > 100) {
+element.style.fontSize = '7px';
+} else if (longueur > 80) {
+element.style.fontSize = '8px';
+} else if (longueur > 60) {
+element.style.fontSize = '9px';
+} else {
+element.style.fontSize = '10px';
 }
-
-// Ajuster selon le nombre de mots (trop de mots = plus petit)
-if (nbMots > 15) {
-taille = Math.max(taille - 1, 5);
-} else if (nbMots > 12) {
-taille = Math.max(taille - 0.5, 5);
-}
-
-// Ajuster selon la longueur moyenne des mots
-if (longueurMoyenneMot > 8) {
-taille = Math.max(taille - 1, 5);
-}
-
-element.style.fontSize = Math.floor(taille) + 'px';
 }
 
 // fonction pour mélanger un tableau
@@ -313,8 +299,8 @@ div.className = div.className + ' checked';
 }
 div.textContent = grilleData[i].texte;
 
-// Optimiser la taille du texte pour la case
-optimiserTailleTexte(div, grilleData[i].texte);
+// Ajuster la taille du texte
+ajusterTailleTexte(div, grilleData[i].texte);
 
 // Ajouter l'événement de clic
 div.setAttribute('data-id', i);
