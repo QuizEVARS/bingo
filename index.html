@@ -42,7 +42,7 @@ body {
 .bingo-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 2px;
+  gap: 4px; /* écart obligatoire entre les cases */
   margin-bottom: 30px;
   background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
   border-radius: 12px;
@@ -51,7 +51,7 @@ body {
 }
 .bingo-case {
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: 3/4; /* hauteur légèrement plus grande que la largeur */
   border: 2px solid #9370db;
   border-radius: 8px;
   background: linear-gradient(to bottom, #ffffff, #f0f8ff);
