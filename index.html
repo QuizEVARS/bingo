@@ -21,6 +21,7 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
             padding: 25px;
             border: 2px solid #4169e1;
+            box-sizing: border-box;
         }
 
         .titre {
@@ -68,6 +69,10 @@
             padding: 10px;
             background: linear-gradient(135deg, #e6e6fa, #f0f8ff);
             border-radius: 12px;
+
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden; /* empêche le débordement horizontal */
         }
 
         /* === BINGO CASES UNIFORMES ET CENTRÉES === */
@@ -89,9 +94,10 @@
             text-align: center;
 
             white-space: normal;
-            word-break: normal;
+            word-break: break-word;
             overflow-wrap: break-word;
             hyphens: none;
+            min-width: 0; /* important pour rester dans le conteneur */
 
             transition: all 0.3s;
             color: #333;
@@ -285,12 +291,12 @@
             var gagnant = false;
 
             for (var i = 0; i < 5; i++) {
-                if ([0, 1, 2, 3, 4].every(j => casesCochees.includes(i * 5 + j))) gagnant = true;
-                if ([0, 1, 2, 3, 4].every(j => casesCochees.includes(j * 5 + i))) gagnant = true;
+                if ([0,1,2,3,4].every(j => casesCochees.includes(i*5 + j))) gagnant = true;
+                if ([0,1,2,3,4].every(j => casesCochees.includes(j*5 + i))) gagnant = true;
             }
 
-            if ([0, 6, 12, 18, 24].every(pos => casesCochees.includes(pos))) gagnant = true;
-            if ([4, 8, 12, 16, 20].every(pos => casesCochees.includes(pos))) gagnant = true;
+            if ([0,6,12,18,24].every(pos => casesCochees.includes(pos))) gagnant = true;
+            if ([4,8,12,16,20].every(pos => casesCochees.includes(pos))) gagnant = true;
 
             if (gagnant && !estGagne) {
                 estGagne = true;
